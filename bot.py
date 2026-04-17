@@ -39,17 +39,17 @@ async def handle(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("👥 Партнёрство: давай разберём твой старт")
 
     elif "продукт" in text:
-        await update.message.reply_text("🛍 Подберём продукт под тебя")
+        import threading
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
-    else:
-        await update.message.reply_text("Выбери: Старт / Система / Партнёр / Продукт")
-
-async def callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    query = update.callback_query
-    await query.answer()
-    await query.edit_message_text("🔥 Отлично! Двигайся дальше по системе.")
+def run_dummy_server():
+    port = int(os.environ.get("PORT", 10000))
+    server = HTTPServer(("0.0.0.0", port), BaseHTTPRequestHandler)
+    server.serve_forever()
 
 if __name__ == "__main__":
+    threading.Thread(target=run_dummy_server).start()
+
     app = ApplicationBuilder().token(TOKEN).build()
 
     app.add_handler(CommandHandler("start", start))
