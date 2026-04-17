@@ -48,7 +48,10 @@ def run_dummy_server():
     port = int(os.environ.get("PORT", 10000))
     server = HTTPServer(("0.0.0.0", port), BaseHTTPRequestHandler)
     server.serve_forever()
-
+async def callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    query = update.callback_query
+    await query.answer()
+    await query.edit_message_text("🔥 Отлично! Двигайся дальше по системе.")
 if __name__ == "__main__":
     threading.Thread(target=run_dummy_server).start()
 
